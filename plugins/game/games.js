@@ -27,8 +27,14 @@ handler.before = async (m, { conn }) => {
         
         const mentions = entries.map(([id]) => id);
         
+        const winner = entries[0][0];
+        if (global.db?.users[winner]) {
+            global.db.users[winner].xp = (global.db.users[winner].xp || 0) + 500;
+            global.db.users[winner].cookies = (global.db.users[winner].cookies || 0) + 10;
+        }
+        
         await conn.sendMessage(m.chat, { 
-            text: `🏆 *الفائزون*\n\n${sorted.join('\n')}`,
+            text: `🏆 *الفائزون*\n\n${sorted.join('\n')}\n\n🏅 @${winner.split('@')[0]} حصل على +500 XP و 🍪 +10 كوكيز`,
             mentions
         });
         delete global.quiz.scores[m.chat];
@@ -36,10 +42,8 @@ handler.before = async (m, { conn }) => {
     }
 
     await m.reply(`✅ احسنت معاك: ${global.quiz.scores[m.chat][player]} نقطه`);
-    handler(m, { conn })
+    handler(m, { conn });
 };
-
-
 
 async function handler(m, { conn }) {
     if (!global.quiz) global.quiz = { games: {}, scores: {} };
@@ -66,7 +70,7 @@ async function handler(m, { conn }) {
             if (global.quiz.games[m.chat]) {
                 delete global.quiz.games[m.chat];
                 delete global.quiz.scores[m.chat];
-                 m.reply("`⏰: انتهى الوقت`");
+                m.reply("`⏰: انتهى الوقت`");
             }
         }, 30000)
     };

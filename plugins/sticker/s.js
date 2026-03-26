@@ -1,24 +1,15 @@
-import { Sticker, StickerTypes } from "wa-sticker-formatter";
+import { createSticker } from "../../system/utils.js";
 
-const test = async (m, { conn }) => {
-  if (!m.quoted) return m.reply("يرجى الرد على صورة أو فيديو لتحويله إلى ملصق");
+const test = async (m, { conn, bot }) => {
+  if (!m.quoted) return m.reply("❤️ ~ يرجى الرد على صورة أو فيديو لتحويله إلى ملصق ~ 💙");
   
-  const media = await m.quoted.download();
-
-  const stickerConfig = {
-    pack: "ڤـ ـ VA ـ ــا",  
-    author: "VA",
-    quality: 100,
-    type: StickerTypes.FULL
-  };
-
-  const sticker = new Sticker(media, stickerConfig);
-  const buffer = await sticker.toBuffer();
-
+  const { pack, author } = bot.config.info.copyright
+  const q = await m.quoted;
+  const buffer = await createSticker(q.download(), { mime: q.mimetype, pack, author })
   await conn.sendMessage(
     m.chat,
     { sticker: buffer },
-    { quoted: m }
+    { quoted: reply_status }
   );
 };
 

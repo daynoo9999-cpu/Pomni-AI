@@ -52,10 +52,22 @@ handler.before = async (m, { conn }) => {
     const winner = checkWinner(game.board);
     
     if (winner || game.board.every(cell => cell)) {
-        const text = winner 
-            ? `${drawBoard(game.board)}\n\n🎉 @${(winner === 'X' ? game.player1 : game.player2).split('@')[0]} فاز!`
-            : `${drawBoard(game.board)}\n\n🤝 تعادل!`;
-        await conn.sendMessage(m.chat, { text, mentions: winner ? [winner === 'X' ? game.player1 : game.player2] : undefined });
+        let text, winnerJid;
+        
+        if (winner) {
+            winnerJid = winner === 'X' ? game.player1 : game.player2;
+            text = `${drawBoard(game.board)}\n\n🎉 @${winnerJid.split('@')[0]} فاز!`;
+            
+            if (global.db?.users[winnerJid]) {
+                global.db.users[winnerJid].xp = (global.db.users[winnerJid].xp || 0) + 500;
+                global.db.users[winnerJid].cookies = (global.db.users[winnerJid].cookies || 0) + 10;
+                text += `\n\n🏆 +500 XP | 🍪 +10 كوكيز`;
+            }
+        } else {
+            text = `${drawBoard(game.board)}\n\n🤝 تعادل!`;
+        }
+        
+        await conn.sendMessage(m.chat, { text, mentions: winnerJid ? [winnerJid] : undefined });
         delete global.xoGames[m.chat];
         return true;
     }

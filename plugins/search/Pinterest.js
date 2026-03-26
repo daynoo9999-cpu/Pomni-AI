@@ -35,7 +35,7 @@ async function test(m, { conn, bot, text }) {
       name: '𝐕𝐈𝐈7 ~ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🕷️',
       jid: '120363225356834044@newsletter'
     },
-    }, m);
+    }, reply_status);
     
   } catch (error) {
     console.error(error.messsage);

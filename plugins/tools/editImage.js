@@ -1,7 +1,7 @@
 import fs from 'fs';
 import axios from 'axios';
 import FormData from 'form-data';
-import { uploadToCatbox } from "../../system/fun.js";
+import { uploadToCatbox } from "../../system/utils.js";
 
 let handler = async (m, { conn, bot, text }) => {
   try {

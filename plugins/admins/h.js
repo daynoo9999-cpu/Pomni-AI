@@ -1,10 +1,11 @@
 const h =  async (m, { text, bot, conn }) => {
     
     try {
+        const { images } = bot.config.info;
         const adReply = {
-            title: bot.config.namebot || "WhatsApp Bot",
+            title: bot.config.info.nameBot || "WhatsApp Bot",
             body: null,
-            thumbnailUrl: ["https://g.top4top.io/p_3700yob0b1.jpg", "https://h.top4top.io/p_37009f24s1.jpg", "https://i.top4top.io/p_37000qovy1.jpg", "https://j.top4top.io/p_3700ui6cl1.jpg"][Math.floor(Math.random() * 4)],
+            thumbnailUrl: images.random(),
             mediaType: 1,
             renderLargerThumbnail: false
         };

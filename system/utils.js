@@ -5,6 +5,8 @@ import { promisify } from "util";
 import axios from "axios";
 import FormData from 'form-data';
 import { fileTypeFromBuffer } from "file-type";
+import { Sticker } from "wa-sticker-formatter";
+
 
 const execAsync = promisify(exec);
 const tmp = path.join(process.cwd(), "tmp");
@@ -12,6 +14,18 @@ const tmp = path.join(process.cwd(), "tmp");
 if (!fs.existsSync(tmp)) {
     fs.mkdirSync(tmp, { recursive: true });
 }
+
+/* ========== Create Sticker ======== */
+
+const createSticker = async (buffer, options = {}) => {
+    const sticker = new Sticker(buffer, {
+        pack: options.pack || 'ڤـ ـ VA ـ ـا',
+        author: options.author || 'VA',
+        type: "full",
+        quality: options.mime === "image/jpg" ? 100 : 10
+    });
+    return sticker.build();
+};
 
 /* ========== GIF TO MP4 ========= */
 
@@ -57,4 +71,10 @@ async function uploadToCatbox(buffer) {
     return response.data.trim();
 }
 
-export { gifToMp4, uploadToCatbox };
+/* =========== AI =========== */
+async function AiChat(options = {}) {
+ const response = `https://text.pollinations.ai/${options.text}?model=${options.model || "openai"}`;
+ return (await fetch(response)).text()
+}
+
+export { gifToMp4, uploadToCatbox, createSticker, AiChat };

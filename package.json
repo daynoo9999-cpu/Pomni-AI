@@ -1,6 +1,6 @@
 {
   "name": "Pomni AI",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Simple WhatsApp bot, Modified by VENi - youssefv",
   "main": "index.js",
   "type": "module",

@@ -1,5 +1,5 @@
 import { Scrapy } from "whatsappy";
-import { gifToMp4 } from "../../system/fun.js";
+import { gifToMp4 } from "../../system/utils.js";
 
 let handler = async (m, { conn }) => {
     try {
