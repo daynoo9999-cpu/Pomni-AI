@@ -24,7 +24,7 @@ if (!global.db) {
 /* =========== Config ========== */
 const { config } = client;
 config.info = { 
-  nameBot: "♡ 𝙋𝙊𝙉𝙈𝙄 🎪 〈", 
+  nameBot: "૮₍｡ᵔ ꈊ ᵔ｡`₎ა🍒܀رٕيا", 
   nameChannel: "𝐕𝐈𝐈7 ~ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🕷️", 
   idChannel: "120363225356834044@newsletter",
   urls: {
